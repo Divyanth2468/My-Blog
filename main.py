@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor, CKEditorField
@@ -17,9 +15,22 @@ from functools import wraps
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import os
+# import smtplib
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+app.config.update(dict(
+    DEBUG=True,
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=465,
+    MAIL_USE_TLS=False,
+    MAIL_USE_SSL=True,
+    MAIL_DEFAULT_SENDER='divyanthsatya00@gmail.com',
+    MAIL_PASSWORD='Dash240608',
+))
+
+mail = Mail(app)
 ckeditor = CKEditor(app)
 Bootstrap(app)
 Base = declarative_base()
@@ -191,9 +202,19 @@ def about():
     return render_template("about.html", current_user=current_user)
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
-    return render_template("contact.html", current_user=current_user)
+    if request.method == "POST":
+        username = request.form['name']
+        user_email = request.form['email']
+        user_phone = request.form['phone']
+        user_msg = request.form['message']
+        msg = Message("Blog", recipients=[user_email])
+        msg.body = f"from {username}\n{user_phone}\n{user_msg}"
+        mail.send(msg)
+        return render_template('contact.html')
+    else:
+        return render_template('contact.html', current_user=current_user)
 
 
 @app.route("/new-post", methods=['GET', "POST"])
@@ -248,4 +269,4 @@ def delete_post(post_id):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
