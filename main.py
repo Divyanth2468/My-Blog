@@ -17,7 +17,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", '8BYkEfBA6O6donzWlSihBXox7C0sKR6b')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 Base = declarative_base()
@@ -191,10 +191,7 @@ def about():
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-    if request.method == "POST":
-        return render_template('contact.html')
-    else:
-        return render_template('contact.html', current_user=current_user)
+    return render_template('contact.html', current_user=current_user)
 
 
 @app.route("/new-post", methods=['GET', "POST"])
