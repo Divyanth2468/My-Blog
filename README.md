@@ -47,22 +47,22 @@ To set up the project locally:
    ```   
 
 Navigate into the project directory:
-```bash
-cd My-Blog
-```
+   ```bash
+   cd My-Blog
+   ```
 
 Install the required dependencies using pip:
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 Set up the database (SQLite or any other database you're using):
-``` bash
-python setup.py
-```
+   ``` bash
+   python setup.py
+   ```
 
 Start the Flask development server:
-```bash
-python app.py
-```
+   ```bash
+   python app.py
+   ```
 Open your browser and visit http://127.0.0.1:5000 to access your blog.
