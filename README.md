@@ -43,7 +43,7 @@ To set up the project locally:
 1. Clone the repository:
 
 ```bash
-   git clone https://github.com/Divyanth2468/My-Blog.git
+git clone https://github.com/Divyanth2468/My-Blog.git
 ```   
 
 Navigate into the project directory:
